@@ -1,0 +1,29 @@
+#!/bin/bash
+ #O script suporta diversas extensões com XML,TXT,BPG,FLAC,PEF,PDB
+
+ if [ "$1" == "" ]
+ then
+ echo -e '\033[01;37mBy\033[04;32m"MITSUKI"\033[00;37m!!!'
+
+    echo -e '\033[05;31m##################### \033[00;31m\033[04;32m"METAFINDE"\033[00;31m\033[05m######################\033[00;37m'
+
+    echo "digite a url no script abaixo"
+    echo "Ex:"
+    echo ": $0 exemplo.com PDF"
+
+    echo -e '\033[05;31m########################################################\033[00;37m'
+        echo -e '\033[01;37mBy\033[04;32m"MITSUKI"\033[00;37m!!!'
+ else
+      echo -e '\033[01;37m\033[04;32mMAPEANDO SITE\033[00;37m'
+  # Mapeia o site para encontrar o tipo de extensão especificada na url 
+      lynx --dump "https://google.com/search?q=site:$1+ext:$2" | grep -E '\.'"$2"'\>' | cut -d "=" -f2 | egrep -v "site|google" | sed 's/...$//' > dados
+  # Baixa os dados 
+      for url in $(cat dados); do
+        wget -q "$url"
+    done
+  # Extrai os metadados 
+    exiftool *.$2
+
+
+ fi
+# obrigado_volte_sempre(Hélder Matina)
